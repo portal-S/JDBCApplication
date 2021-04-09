@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd">
+    <changeSet author="portal" id="1">
+        <createTable tableName="skills">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(64)"/>
+        </createTable>
+        <createTable tableName="teams">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(64)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+        <createTable tableName="developers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="firstName" type="varchar(64)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="lastName" type="varchar(64)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="team_id" type="int"></column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="developers" baseColumnNames="team_id" constraintName="dev_team" referencedTableName="teams"
+                                 referencedColumnNames="id" onDelete="SET NULL"></addForeignKeyConstraint>
+        <createTable tableName="developers_skills">
+            <column name="developer_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="skill_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="developers_skills" baseColumnNames="developer_id" constraintName="dev_id_cons"
+                                 referencedTableName="developers"
+                                 referencedColumnNames="id" onDelete="CASCADE"></addForeignKeyConstraint>
+        <addForeignKeyConstraint baseTableName="developers_skills" baseColumnNames="skill_id" constraintName="skill_id_cons"
+                                 referencedTableName="skills"
+                                 referencedColumnNames="id" onDelete="CASCADE"></addForeignKeyConstraint>
+    </changeSet>
+</databaseChangeLog>
