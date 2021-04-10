@@ -41,7 +41,7 @@ public class SkillRepositoryImpl<T> implements SkillRepository {
     public Skill create(Skill skill){
             return (Skill) func((con, set, stat) -> {
                 skill.setId(Util.getMaxId("skills") + 1);
-                stat.execute("INSERT INTO skills (id, name) VALUES (" + skill.getId() + ", '" + skill.getName() + "')");
+                stat.execute("INSERT INTO skills (name) VALUES (" + skill.getName() + ")");
                 return skill;
             });
     }
